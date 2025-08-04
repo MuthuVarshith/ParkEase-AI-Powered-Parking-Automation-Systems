@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .status-card {
+            margin: 20px;
+        }
+        .status-card .card-body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mt-4 mb-4">Parking System Status</h1>
+
+        <!-- Current Parking Status -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card status-card">
+                    <div class="card-header bg-info text-white">
+                        <h4>Currently Parked Vehicles</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2>
+                            {% if last_detected_plate %}
+                                1 vehicle is currently parked.
+                            {% else %}
+                                No vehicle currently detected.
+                            {% endif %}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Detected Plate -->
+            <div class="col-md-4">
+                <div class="card status-card">
+                    <div class="card-header bg-success text-white">
+                        <h4>Most Recent Detected Plate</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2>
+                            {% if last_detected_plate %}
+                                {{ last_detected_plate }}
+                            {% else %}
+                                No recent plate detected.
+                            {% endif %}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Records Count -->
+            <div class="col-md-4">
+                <div class="card status-card">
+                    <div class="card-header bg-warning text-white">
+                        <h4>Active Records</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2>
+                            {% if active_records %}
+                                {{ active_records|length - 1 }} <!-- Subtracting the header row -->
+                            {% else %}
+                                0 active records.
+                            {% endif %}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <!-- Parking History Link -->
+            <div class="col-md-12 text-center">
+                <a href="{{ url_for('history') }}" class="btn btn-primary btn-lg">View Parking History</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
